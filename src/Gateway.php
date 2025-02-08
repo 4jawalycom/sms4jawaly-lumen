@@ -4,6 +4,7 @@ namespace Sms4jawaly\Lumen;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Exception\RequestException;
 
 class Gateway
 {
@@ -90,6 +91,25 @@ class Gateway
                 'success' => false,
                 'error' => $e->getMessage()
             ];
+        }
+    }
+
+    /**
+     * Get sender names
+     * @return array
+     */
+    public function getSenderNames()
+    {
+        try {
+            $response = $this->client->get('/account/area/senders', [
+                'query' => [
+                    'return_collection' => 1
+                ]
+            ]);
+
+            return json_decode($response->getBody(), true);
+        } catch (RequestException $e) {
+            throw new Exception($e->getMessage());
         }
     }
 
