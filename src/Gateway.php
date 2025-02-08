@@ -9,7 +9,7 @@ use Exception;
 
 class Gateway
 {
-    const API_BASE_URL = 'https://api-sms.4jawaly.com/api/v1';
+    const API_BASE_URL = 'https://api-sms.4jawaly.com/api/v1/';
     
     private $apiKey;
     private $apiSecret;
@@ -32,7 +32,7 @@ class Gateway
     public function getBalance(): array
     {
         try {
-            $response = $this->client->get('/account/area/me/packages', [
+            $response = $this->client->get('account/area/me/packages', [
                 'query' => [
                     'is_active' => 1,
                     'p_type' => 1
@@ -63,7 +63,7 @@ class Gateway
             $page = 1;
             
             do {
-                $response = $this->client->get('/account/area/senders', [
+                $response = $this->client->get('account/area/senders', [
                     'query' => ['page' => $page]
                 ]);
                 
@@ -103,8 +103,8 @@ class Gateway
     public function getSenderNames()
     {
         try {
-            $response = $this->client->post('/account/area/senders', [
-                'json' => [
+            $response = $this->client->get('account/area/senders', [
+                'query' => [
                     'return_collection' => 1
                 ]
             ]);
@@ -124,7 +124,7 @@ class Gateway
     public function sendSMS($params)
     {
         try {
-            $response = $this->client->post('/messages', [
+            $response = $this->client->post('messages', [
                 'json' => $params
             ]);
 
