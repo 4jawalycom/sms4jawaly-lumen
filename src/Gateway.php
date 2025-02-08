@@ -5,6 +5,7 @@ namespace Sms4jawaly\Lumen;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
+use Exception;
 
 class Gateway
 {
