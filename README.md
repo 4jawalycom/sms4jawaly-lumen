@@ -1,79 +1,62 @@
 # SMS4Jawaly for Lumen
 
-مكتبة SMS4Jawaly لإطار العمل Lumen
+مكتبة لإرسال الرسائل النصية القصيرة عبر خدمة SMS4Jawaly في إطار عمل Lumen.
 
-## التثبيت | Installation
+## المتطلبات
+
+- PHP: ^7.0|^8.0
+- guzzlehttp/guzzle: ^6.0|^7.0
+- illuminate/support: ^7.0|^8.0|^9.0|^10.0
+
+## التثبيت
+
+يمكنك تثبيت المكتبة باستخدام Composer:
 
 ```bash
 composer require sms4jawaly/lumen
 ```
 
-## الإعداد | Configuration
+## الإعداد
 
-أضف بيانات الاعتماد الخاصة بك في ملف `.env`:
-
-Add your credentials to your `.env` file:
-
-```env
-SMS4JAWALY_API_KEY=your_api_key
-SMS4JAWALY_API_SECRET=your_api_secret
-```
-
-قم بإضافة التكوين التالي في ملف `config/services.php`:
-
-Add the following configuration to your `config/services.php`:
-
-```php
-'sms4jawaly' => [
-    'api_key' => env('SMS4JAWALY_API_KEY'),
-    'api_secret' => env('SMS4JAWALY_API_SECRET'),
-],
-```
-
-قم بتسجيل مزود الخدمة في ملف `bootstrap/app.php`:
-
-Register the service provider in your `bootstrap/app.php`:
+1. قم بإضافة مزود الخدمة في ملف `bootstrap/app.php`:
 
 ```php
 $app->register(Sms4jawaly\Lumen\Sms4jawalyServiceProvider::class);
 ```
 
-## الاستخدام | Usage
+2. قم بإضافة المتغيرات البيئية التالية في ملف `.env`:
 
-### إرسال رسالة SMS | Sending an SMS
+```env
+SMS4JAWALY_USERNAME=your_username
+SMS4JAWALY_PASSWORD=your_password
+SMS4JAWALY_SENDER=your_sender
+```
+
+## الاستخدام
 
 ```php
 use Sms4jawaly\Lumen\Gateway;
 
-$sms = app(Gateway::class);
+// إنشاء كائن جديد
+$sms = new Gateway();
 
-$response = $sms->sendSms(
-    'رسالة تجريبية من فورجوالي', // نص الرسالة | Message text
-    ['966500000000'],            // أرقام المستلمين | Recipient numbers
-    '4jawaly'                    // اسم المرسل | Sender name
-);
-```
+// إرسال رسالة
+$response = $sms->sendSMS([
+    'numbers' => '966500000000',
+    'message' => 'مرحباً بك!'
+]);
 
-### جلب الرصيد | Get Balance
-
-```php
+// الحصول على الرصيد
 $balance = $sms->getBalance();
+
+// الحصول على أسماء المرسلين
+$senders = $sms->getSenderNames();
 ```
 
-### جلب أسماء المرسلين | Get Sender Names
+## المساهمة
 
-```php
-$senders = $sms->getSenders();
-```
+نرحب بمساهماتكم! يرجى إرسال pull request إذا كان لديكم أي تحسينات أو إصلاحات.
 
-## المساهمة | Contributing
+## الترخيص
 
-نرحب بمساهماتكم! يرجى إرسال pull request.
-
-Contributions are welcome! Please submit a pull request.
-
-## الترخيص | License
-
-هذه المكتبة مرخصة تحت رخصة MIT.
-
-This library is licensed under the MIT License.
+هذه المكتبة مرخصة تحت [MIT License](LICENSE).
