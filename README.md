@@ -68,7 +68,7 @@ use Sms4jawaly\Lumen\Gateway;
 $sms = new Gateway();
 
 // إرسال رسالة بالطريقة المبسطة
-$response = $sms->send_lite(
+$response = $sms->sendLite(
     'مرحباً بك!',                // نص الرسالة
     ['966500000000'],           // أرقام المستلمين
     '4jawaly'                   // اسم المرسل

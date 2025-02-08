@@ -11,6 +11,9 @@ class Gateway
 {
     const API_BASE_URL = 'https://api-sms.4jawaly.com/api/v1/';
     
+    const APP_NAME = 'sms4jawaly_lumen';
+    const APP_VERSION = '1.2.0';
+
     private $apiKey;
     private $apiSecret;
     private $client;
@@ -141,7 +144,7 @@ class Gateway
      * @param string $sender Sender name
      * @return array
      */
-    public function send_lite(string $message, array $numbers, string $sender): array
+    public function sendLite(string $message, array $numbers, string $sender): array
     {
         $result = [
             'success' => true,
@@ -154,8 +157,8 @@ class Gateway
         try {
             $response = $this->client->post('account/area/sms/send', [
                 'json' => [
-                    "app" => "lumenpk",
-                    "ver" => "1.0.0",
+                    "app" => self::APP_NAME,
+                    "ver" => self::APP_VERSION,
                     'messages' => [
                         [
                             'text' => $message,
