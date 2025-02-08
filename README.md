@@ -45,7 +45,7 @@ $sms = new Gateway();
 $response = $sms->sendSMS([
     'messages' => [
         [
-            'text' => 'مرحباً بك!',
+            'text' => 'مرحباً بك بفورجوالي!',
             'numbers' => ['966500000000'],
             'sender' => '4jawaly'
         ]

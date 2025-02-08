@@ -195,4 +195,14 @@ class Gateway
             'Content-Type' => 'application/json'
         ];
     }
+
+    /**
+     * Get the Guzzle HTTP client instance
+     * This allows direct access to make custom API calls
+     * @return Client
+     */
+    public function getClient(): Client
+    {
+        return $this->client;
+    }
 }
