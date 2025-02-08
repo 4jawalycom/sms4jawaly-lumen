@@ -98,12 +98,13 @@ class Gateway
     /**
      * Get sender names
      * @return array
+     * @throws Exception
      */
     public function getSenderNames()
     {
         try {
-            $response = $this->client->get('/account/area/senders', [
-                'query' => [
+            $response = $this->client->post('/account/area/senders', [
+                'json' => [
                     'return_collection' => 1
                 ]
             ]);
