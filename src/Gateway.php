@@ -135,6 +135,52 @@ class Gateway
     }
 
     /**
+     * Send SMS messages (Lite version)
+     * @param string $message Message text
+     * @param array $numbers Array of phone numbers
+     * @param string $sender Sender name
+     * @return array
+     */
+    public function send_lite(string $message, array $numbers, string $sender): array
+    {
+        $result = [
+            'success' => true,
+            'total_success' => 0,
+            'total_failed' => 0,
+            'job_ids' => [],
+            'errors' => []
+        ];
+
+        try {
+            $response = $this->client->post('account/area/sms/send', [
+                'json' => [
+                    "app" => "lumenpk",
+                    "ver" => "1.0.0",
+                    'messages' => [
+                        [
+                            'text' => $message,
+                            'numbers' => $numbers,
+                            'sender' => $sender
+                        ]
+                    ]
+                ]
+            ]);
+
+            $data = json_decode($response->getBody()->getContents(), true);
+            $result['total_success'] = count($numbers);
+            if (isset($data['job_id'])) {
+                $result['job_ids'][] = $data['job_id'];
+            }
+        } catch (GuzzleException $e) {
+            $result['success'] = false;
+            $result['total_failed'] = count($numbers);
+            $result['errors'][$e->getMessage()] = $numbers;
+        }
+
+        return $result;
+    }
+
+    /**
      * Create authorization headers
      * @return array
      */

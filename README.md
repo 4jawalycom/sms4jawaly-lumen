@@ -33,6 +33,8 @@ SMS4JAWALY_PASSWORD=your_password
 
 ## الاستخدام
 
+### الإصدار الكامل (Full Version)
+
 ```php
 use Sms4jawaly\Lumen\Gateway;
 
@@ -55,6 +57,31 @@ $balance = $sms->getBalance();
 
 // الحصول على أسماء المرسلين
 $senders = $sms->getSenderNames();
+```
+
+### الإصدار المبسط (Lite Version)
+
+```php
+use Sms4jawaly\Lumen\Gateway;
+
+// إنشاء كائن جديد
+$sms = new Gateway();
+
+// إرسال رسالة بالطريقة المبسطة
+$response = $sms->send_lite(
+    'مرحباً بك!',                // نص الرسالة
+    ['966500000000'],           // أرقام المستلمين
+    '4jawaly'                   // اسم المرسل
+);
+
+// مثال على شكل الاستجابة
+[
+    'success' => true,          // نجاح العملية
+    'total_success' => 1,       // عدد الرسائل الناجحة
+    'total_failed' => 0,        // عدد الرسائل الفاشلة
+    'job_ids' => ['123456'],    // معرفات المهام
+    'errors' => []              // أي أخطاء إن وجدت
+]
 ```
 
 ## المساهمة
