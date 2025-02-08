@@ -29,7 +29,6 @@ $app->register(Sms4jawaly\Lumen\Sms4jawalyServiceProvider::class);
 ```env
 SMS4JAWALY_USERNAME=your_username
 SMS4JAWALY_PASSWORD=your_password
-SMS4JAWALY_SENDER=your_sender
 ```
 
 ## الاستخدام
@@ -42,8 +41,13 @@ $sms = new Gateway();
 
 // إرسال رسالة
 $response = $sms->sendSMS([
-    'numbers' => '966500000000',
-    'message' => 'مرحباً بك!'
+    'messages' => [
+        [
+            'text' => 'مرحباً بك!',
+            'numbers' => ['966500000000'],
+            'sender' => '4jawaly'
+        ]
+    ]
 ]);
 
 // الحصول على الرصيد

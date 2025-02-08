@@ -115,46 +115,21 @@ class Gateway
 
     /**
      * Send SMS messages
-     * @param string $message
-     * @param array $numbers
-     * @param string $sender
+     * @param array $params
      * @return array
+     * @throws Exception
      */
-    public function sendSms(string $message, array $numbers, string $sender): array
+    public function sendSMS($params)
     {
-        $result = [
-            'success' => true,
-            'total_success' => 0,
-            'total_failed' => 0,
-            'job_ids' => [],
-            'errors' => []
-        ];
-
         try {
-            $response = $this->client->post('/account/area/sms/send', [
-                'json' => [
-                    'messages' => [
-                        [
-                            'text' => $message,
-                            'numbers' => $numbers,
-                            'sender' => $sender
-                        ]
-                    ]
-                ]
+            $response = $this->client->post('/messages', [
+                'json' => $params
             ]);
-            
-            $data = json_decode($response->getBody()->getContents(), true);
-            $result['total_success'] = count($numbers);
-            if (isset($data['job_id'])) {
-                $result['job_ids'][] = $data['job_id'];
-            }
-        } catch (GuzzleException $e) {
-            $result['success'] = false;
-            $result['total_failed'] = count($numbers);
-            $result['errors'][$e->getMessage()] = $numbers;
-        }
 
-        return $result;
+            return json_decode($response->getBody(), true);
+        } catch (RequestException $e) {
+            throw new Exception($e->getMessage());
+        }
     }
 
     /**
